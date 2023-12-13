@@ -1,7 +1,7 @@
 <tool id="updio" name="UPDio" version="1.1.0+galaxy3" python_template_version="3.5" profile="21.05">
     <requirements>
         <requirement type="package" version="1.1.0">updio</requirement>
-        <container type="docker">quay.io/biowdl/updio:1.1.0</container>
+        <container type="docker">quay.io/biocontainers/updio:1.1.0--hdfd78af_0</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        #if str($input_type.input_type_selector) == "file"
