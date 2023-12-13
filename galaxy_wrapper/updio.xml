@@ -4,6 +4,9 @@
         <container type="docker">quay.io/biowdl/updio:1.1.0</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
+        #if str($input_type.input_type_selector) == "file"
+
+        #endif
        ln -s $multisample_vcf input.vcf.gz &&
         updio --multisample_vcf input.vcf.gz
         --childID $child_id
@@ -14,13 +17,29 @@
     ]]></command>
     <inputs>
         <param name="multisample_vcf" type="data" format="vcf_bgzip"
-               label="multisample VCF file" />
-        <param name="child_id" type="text"
-               label="child sample ID in the VCF file" />
-        <param name="mom_id" type="text"
-               label="Mother sample ID in the VCF file" />
-        <param name="dad_id" type="text"
-               label="Father sample ID in the VCF file" />
+           label="multisample VCF file" />
+        <conditional name="input_type">
+            <param name="input_type_selector" type="select" label="Input type">
+                <option value="text" selected="true">Text</option>
+                <option value="file">Files (for easier workflow integration)</option>
+            </param>
+            <when value="text">
+                <param name="child_id" type="text"
+                       label="child sample ID in the VCF file" />
+                <param name="mom_id" type="text"
+                       label="Mother sample ID in the VCF file" />
+                <param name="dad_id" type="text"
+                       label="Father sample ID in the VCF file" />
+            </when>
+            <when value="file">
+                <param name="child_id_file" type="data"
+                       label="Child sample ID in the VCF file. Provided as a single line file."/>
+                <param name="mother_id_file" type="data"
+                       label="Mother sample ID in the VCF file. Provided as a single line file."/>
+                <param name="father_id_file" type="data"
+                       label="Father sample ID in the VCF file. Provided as a single line file."/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <data format="tsv" name="updio_table" label="${tool.name} on ${child_id}: table"/>
