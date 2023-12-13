@@ -24,7 +24,7 @@
         <param name="output_label" type="text"
            label="Analysis name, to distinguish the output." />
         <conditional name="input_type">
-            <param name="input_type_selector" type="select" label="Input type">
+            <param name="input_type_selector" type="select" label="Sample IDs submitted by:">
                 <option value="text" selected="true">Text</option>
                 <option value="file">Files (for easier workflow integration)</option>
             </param>
